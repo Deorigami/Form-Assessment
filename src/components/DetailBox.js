@@ -5,15 +5,16 @@ import styled from "styled-components/macro";
 import { GlobalContext } from "../Globalcontext";
 
 function DetailBox() {
-  const [data] = useContext(GlobalContext);
+  const [data, options] = useContext(GlobalContext);
   const [formValue, setFormValue] = useState(false);
 
   console.log(useContext(GlobalContext));
 
   const onChange = (e) => {
-    if (e.target.value === "") {
-      setFormValue(false);
-    } else setFormValue(true);
+    // if (e.target.value === "") {
+    //   setFormValue(false);
+    // } else setFormValue(true);
+    // console.log(e.target);
   };
 
   return (
@@ -21,30 +22,34 @@ function DetailBox() {
       <div className="info">Detail</div>
 
       <div className="form">
-        <label>Name</label>
         <br />
         <FormControl>
           <InputLabel id="demo-simple-select-label">Name</InputLabel>
-          <Select labelId="demo-simple-select-label" id="demo-simple-select">
-            <MenuItem value="">Name</MenuItem>
-            <MenuItem value={20}>Twenty</MenuItem>
-            <MenuItem value={30}>Thirty</MenuItem>
+          <Select
+            labelId="demo-simple-select-label"
+            id="demo-simple-select"
+            style={{ width: "100px" }}
+          >
+            <MenuItem value={30}>Name</MenuItem>
           </Select>
         </FormControl>
-        <br />
-        <label>Distribution Center</label>
+
         <br />
 
-        <select name="DC">
-          {formValue ? (
-            <Fragment>
-              <option value="DC Tangerang">DC Tangerang</option>
-              <option value="DC Cikarang">DC Cikarang</option>
-            </Fragment>
-          ) : (
-            <option value="">No data available</option>
-          )}
-        </select>
+        <br />
+
+        <FormControl>
+          <InputLabel id="demo-simple-select-label">Name</InputLabel>
+          <Select
+            labelId="demo-simple-select-label"
+            id="demo-simple-select"
+            style={{ width: "100px" }}
+          >
+            <MenuItem value="">Name</MenuItem>
+            <MenuItem>Twenty</MenuItem>
+            <MenuItem>Thirty</MenuItem>
+          </Select>
+        </FormControl>
       </div>
     </Container>
   );
@@ -61,5 +66,6 @@ const Container = styled.div`
   }
 
   .form {
+    width: 70%;
   }
 `;

@@ -1,12 +1,7 @@
 import React from "react";
-import Test from "./Test";
 
 function ProductBox() {
-  return (
-    <div style={{ width: "100%" }}>
-      <Test></Test>
-    </div>
-  );
+  return <div style={{ width: "100%" }}></div>;
 }
 
 export default ProductBox;

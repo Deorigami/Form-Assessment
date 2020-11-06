@@ -3,6 +3,7 @@ import { useState } from "react";
 import styled from "styled-components/macro";
 import { GlobalContext } from "../Globalcontext";
 import Select from "react-select";
+import AsyncSelect from "react-select/async";
 
 export default function Test() {
   const [dataApi, option] = useContext(GlobalContext);
@@ -32,6 +33,8 @@ export default function Test() {
         <Select id="test" />
       )}
       {console.log(option)}
+
+      <AsyncSelect loadOptions={option}></AsyncSelect>
     </div>
   );
 }
