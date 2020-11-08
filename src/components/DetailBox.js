@@ -1,56 +1,85 @@
-import React, { Fragment, useContext } from "react";
-import { InputLabel, Select, FormControl, MenuItem } from "@material-ui/core";
-import { useState } from "react";
+import React, { useContext, useState } from "react";
+import { DatePicker, Select } from "antd";
+import "antd/dist/antd.css";
 import styled from "styled-components/macro";
 import { GlobalContext } from "../Globalcontext";
+import { Payment } from "../data/Data";
+import ProductForm from "./ProductForm";
+import TextArea from "antd/lib/input/TextArea";
 
 function DetailBox() {
-  const [data, options] = useContext(GlobalContext);
+  const { Option } = Select;
+  const [data] = useContext(GlobalContext);
   const [formValue, setFormValue] = useState(false);
+  const [formData, setFormData] = useState({});
 
-  console.log(useContext(GlobalContext));
+  console.log(useContext(GlobalContext), formData);
 
-  const onChange = (e) => {
-    // if (e.target.value === "") {
-    //   setFormValue(false);
-    // } else setFormValue(true);
-    // console.log(e.target);
+  const changeName = (e) => {
+    if (e === "") {
+      setFormValue(false);
+    } else {
+      setFormValue(true);
+      setFormData({ ...formData, name: e });
+    }
+  };
+
+  const changeDC = (e) => {
+    setFormData({ ...formData, dc: e });
   };
 
   return (
     <Container>
       <div className="info">Detail</div>
 
-      <div className="form">
+      <div className="formUser">
+        <label htmlFor="">Name</label>
         <br />
-        <FormControl>
-          <InputLabel id="demo-simple-select-label">Name</InputLabel>
-          <Select
-            labelId="demo-simple-select-label"
-            id="demo-simple-select"
-            style={{ width: "100px" }}
-          >
-            <MenuItem value={30}>Name</MenuItem>
-          </Select>
-        </FormControl>
-
+        <Select
+          defaultValue="Name"
+          style={{ width: 120 }}
+          onChange={changeName}
+        >
+          {data.map((data, i) => (
+            <Option key={i} value={data.employee_name}>
+              {data.employee_name}
+            </Option>
+          ))}
+        </Select>
+        <br />
         <br />
 
+        <label htmlFor="">Distribution Center</label>
         <br />
-
-        <FormControl>
-          <InputLabel id="demo-simple-select-label">Name</InputLabel>
-          <Select
-            labelId="demo-simple-select-label"
-            id="demo-simple-select"
-            style={{ width: "100px" }}
-          >
-            <MenuItem value="">Name</MenuItem>
-            <MenuItem>Twenty</MenuItem>
-            <MenuItem>Thirty</MenuItem>
-          </Select>
-        </FormControl>
+        <Select
+          defaultValue={formValue ? null : "No data available."}
+          disabled={formValue ? false : true}
+          onChange={changeDC}
+        >
+          <Option key={1} value="DC Tangerang">
+            DC Tangerang
+          </Option>
+          <Option key={2} value="DC Cikarang">
+            DC Cikarang
+          </Option>
+        </Select>
       </div>
+
+      {formData.name && formData.dc && (
+        <div className="paymentBox">
+          <Select defaultValue="" style={{ width: "150px" }}>
+            {Payment.map((data, i) => (
+              <Option key={i}>{data}</Option>
+            ))}
+          </Select>
+
+          <DatePicker />
+
+          <TextArea />
+        </div>
+      )}
+
+      <ProductForm formData={formData} setFormData={setFormData} />
     </Container>
   );
 }
@@ -65,7 +94,7 @@ const Container = styled.div`
     width: 30%;
   }
 
-  .form {
+  .formUser {
     width: 70%;
   }
 `;
